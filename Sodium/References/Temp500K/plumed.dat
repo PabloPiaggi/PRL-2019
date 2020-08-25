@@ -1,0 +1,8 @@
+# vim:ft=plumed
+
+UNITS LENGTH=A
+
+energy: ENERGY
+
+PRINT ARG=* FILE=COLVAR STRIDE=500
+

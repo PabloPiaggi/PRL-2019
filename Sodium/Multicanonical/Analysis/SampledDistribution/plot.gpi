@@ -1,0 +1,6 @@
+
+pl "../targetdist.b1.iter-9500.data" u 1:2 w l title "Target"
+repl "histoEne" u 1:2 w l title "Multicanonical"
+repl "/mnt/storage3/piaggp/PhaseDiagramsFromSingleSimulations/Sodium/References/Energies/liquid-FixBox/450K/SampledDistribution/histoEne" u 1:2 w l title "Boltzmann 450K"
+
+pause -1

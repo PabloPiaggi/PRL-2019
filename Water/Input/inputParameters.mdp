@@ -1,0 +1,56 @@
+;	Input file
+
+;define              =  
+integrator          =  md
+nsteps              =  150000000
+dt                  =  0.002
+
+; output control 
+nstlog                   = 10000
+nstcalcenergy            = 1
+nstenergy                = 100
+nstxout                  = 0
+nstvout                  = 0
+nstfout                  = 0
+nstxout-compressed       = 500
+
+; neighbour searching
+cutoff-scheme       = verlet
+nstlist             = 10
+ns_type             = grid
+pbc                 = xyz
+rlist               = 0.95
+DispCorr                 = EnerPres 
+table-extension          = 1
+
+; electrostatic
+coulombtype         = PME
+rcoulomb            = 0.84
+
+; vdw
+vdw-type            = cut-off 
+rvdw                = 0.84
+
+; LINCS for waters
+constraints              = all-angles
+constraint-algorithm     = lincs
+lincs-iter               =  1
+lincs-order              =  6
+
+; temperature
+Tcoupl              = v-rescale 
+tc_grps             = system 
+tau_t               = 0.1
+ref_t               = 300
+
+; create velocities
+;gen-vel             = yes
+;gen-temp            = 300
+;gen_seed            = 508934891
+
+; pressure
+Pcoupl                   = Parrinello-Rahman
+tau_p                    = 2.0
+pcoupltype               = isotropic 
+ref_p                    = 1 
+compressibility          = 5e-5

@@ -1,0 +1,37 @@
+echo both
+
+include		in.temp
+include		in.pressure
+include 	in.seed
+units		metal
+include		in.box
+include 	in.setup
+
+# NPT
+
+fix             1 all nve
+fix             2 all temp/csvr ${temperature} ${temperature} ${tempDamp} ${seed}
+
+velocity        all create ${temperature} ${seed} dist gaussian
+
+run             500000 # 1 ns
+
+unfix		1
+unfix		2
+
+reset_timestep	0
+
+include		in.dump
+
+timer 		timeout 23:50:00 every 1000
+
+fix             1 all plumed plumedfile plumed.start.dat outfile plumed.out
+fix             2 all nve
+fix             3 all temp/csvr ${temperature} ${temperature} ${tempDamp} ${seed}
+
+run             5000000 upto # 10ns
+
+write_data	data.final
+
+write_restart	restart.lmp
+

@@ -1,0 +1,47 @@
+# vim:ft=plumed
+
+RESTART
+
+UNITS LENGTH=A
+
+energy: ENERGY
+
+# Construct a bias potential using VES
+#
+# Basis functions
+
+bf1: BF_LEGENDRE ORDER=20 MINIMUM=-25000 MAXIMUM=-23500
+
+# Target distributions
+
+TD_MULTICANONICAL ...
+ LABEL=td_multi
+ SIGMA=50.0
+ MIN_TEMP=400
+ MAX_TEMP=600
+ THRESHOLD=1
+... TD_MULTICANONICAL
+
+
+# Expansion
+
+VES_LINEAR_EXPANSION ...
+ ARG=energy
+ BASIS_FUNCTIONS=bf1
+ TEMP=500.0
+ GRID_BINS=1000
+ TARGET_DISTRIBUTION=td_multi
+ LABEL=b1
+... VES_LINEAR_EXPANSION
+
+# Optimization algorithm
+
+OPT_DUMMY ...
+  BIAS=b1
+  STRIDE=500
+  LABEL=o1
+  COEFFS_OUTPUT=10
+... OPT_DUMMY
+
+PRINT ARG=* FILE=COLVAR STRIDE=500
+
